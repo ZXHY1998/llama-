@@ -1,0 +1,5 @@
+transformers
+modelscope
+deepspeed
+datasets
+SentencePiece

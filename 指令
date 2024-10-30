@@ -1,0 +1,21 @@
+# 处理数据
+python3 pretrain_data_process.py \
+--model_name_or_path Llama-2-7b-hf \
+--data_path data/FinCorpus \
+--save_dir data/FinCorpus_tokenized \
+--max_length 4096 \
+--num_proc 8
+
+# 启动预训练任务
+
+deepspeed --num_nodes=1 --num_gpus=1 main.py \
+--train_model pretrain \
+--model_name_or_path Llama-2-7b-hf \
+--save_name model/model-pretrained \
+--data_path data/FinCorpus_tokenized \
+--epochs 1 \
+--per_device_train_batch_size 4 \
+--max_length 4096 \
+--ds_zero_stage 2 \
+--save_steps 40 \
+--gradient_checkpointing
